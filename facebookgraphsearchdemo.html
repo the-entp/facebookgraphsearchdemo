@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+  	<h1>Search for businesses using facebook graph search</h1>
+  	<form>
+  		Search query: <input type="text" name="query"><br>
+  		<button type="button" id="search">Get results</button>
+	</form>
+	<div id="results">
+	</div>
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+    function process() {
+    	var query = $("input").val();
+    	var u = "https://graph.facebook.com/oauth/access_token?type=client_cred&client_id=1423578114562195&client_secret=3ea7880c3890acd4a0345a51c8f8a77c";
+    	var ul = "https://graph.facebook.com/search?q="+query+"&type=place&limit=50&";
+    	$.get(u, function(auth_token) {
+    	$.ajax({
+    		dataType: "jsonp",
+    		url: ul+auth_token,
+    		success: function(res) {
+    			if (res.data && res.data.length) {
+    				$('#results').empty();
+    				$.each(res.data, function(i, item) {
+    					var location = item.location;
+    					var address = "";
+    					if (location.street) {
+    						address += location.street;
+    					}
+    					if (location.city) {
+    						address += "; " + location.city;
+    					}
+    					if (location.state) {
+    						address += ", " + location.state;
+    					}
+    					$("#results").append("<p>"+item.name+" at " + address + "</p>");
+    					// console.log(item);
+    				});
+    			}
+    		},
+    		error: function() {
+    			alert("Oops! Something went wrong");
+    		}
+    	});
+    });
+
+    }
+
+    $(document).ready(function() {
+    	$('#search').on('click', process);
+    	
+    });
+
+    </script>
+  </body>
+
+</html>
