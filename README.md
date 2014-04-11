@@ -1,7 +1,8 @@
 facebookgraphsearchdemo
 =======================
 
-FB graph search demo api using jquery
+FB graph search demo api using jquery.
+
 Check it out at http://facebookgraphdemo.herokuapp.com
 
 Found a resource online that showed me how to do facebook graph api calls/looked at documentation:
